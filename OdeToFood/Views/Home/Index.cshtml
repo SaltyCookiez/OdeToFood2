@@ -3,7 +3,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-@using (Html.AjaxBeginForm(new AjaxOptions
+<form method="get" action ="@Url.Action("Index")"
+      data-otf-ajax="true" data-otf-target="#restaurantList">
+    <input type="search" name="searchTerm" data-otf-autocomplete="@Url.Action("Autocomplete")" />
+    <input type="submit" name="Search By Name" />
+</form>
+
+@*@using (Html.AjaxBeginForm(new AjaxOptions
 {
     HttpMethod = "get",
     InsertionMode = InsertionMode.Replace,
@@ -12,6 +18,6 @@
 {
     <input type="search" name="searchTerm" />
     <input type="submit" name="Search By Name" />
-}
+}*@
 
 <partial name="_Restaurants" model="Model" />
