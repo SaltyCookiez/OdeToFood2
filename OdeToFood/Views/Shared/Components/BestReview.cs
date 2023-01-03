@@ -10,7 +10,7 @@ namespace OdeToFood.Views.Shared.Components
         private List<RestaurantReview> _reviews;
         public BestReview()
         {
-            _reviews = Controllers.RestaurantReviewsController._reviews;
+            //_reviews = Controllers.RestaurantReviewsController._reviews;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
