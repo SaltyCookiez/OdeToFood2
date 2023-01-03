@@ -40,3 +40,10 @@
 <div>
     <a asp-action="Index" asp-route-Id="@Context.Request.Query["resturantId"]">Back to List</a>
 </div>
+
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
