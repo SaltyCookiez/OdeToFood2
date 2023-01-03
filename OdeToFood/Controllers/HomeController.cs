@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Data;
 using OdeToFood.Models;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace OdeToFood.Controllers
 {
@@ -29,12 +30,11 @@ namespace OdeToFood.Controllers
             return Json(model);
         }
 
-        public IActionResult Index(string? searchTerm = null)
+        public IActionResult Index(string? searchTerm = null, int page = 1)
         {
             var model = _context.Restaurants
             .OrderByDescending(r => r.Reviews.Average(review => review.Rating))
             .Where(r => searchTerm == null || r.Name.Contains(searchTerm))
-            .Take(10)
             .Select(r => new RestaurantListViewModel
             {
                 Id = r.Id,
@@ -42,7 +42,7 @@ namespace OdeToFood.Controllers
                 City = r.City,
                 Country = r.Country,
                 CountOfReviews = r.Reviews.Count()
-            });
+            }).ToPagedList(page, 10);
 
             if (Request.IsAjaxRequest())
             {
