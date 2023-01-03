@@ -19,7 +19,8 @@ namespace OdeToFood.Data
                             new RestaurantReview()
                             {
                                 Rating=10,
-                                Body = "Superlahe!"
+                                Body = "Superlahe!",
+                                ReviewerName = "Jaanus"
                             }
                         }
                     });
@@ -28,30 +29,14 @@ namespace OdeToFood.Data
                     {
                         Name = "Marrakesh",
                         City = "D.C",
-                        Country = "USA",
-                        Reviews = new List<RestaurantReview>
-                        {
-                            new RestaurantReview()
-                            {
-                                Rating=5,
-                                Body = "Okei!"
-                            }
-                        }
+                        Country = "USA"
                     });
                 context.Restaurants.Add(
                     new Restaurant
                     {
                         Name = "The House of Elliot",
                         City = "Ghent",
-                        Country = "Belgium",
-                        Reviews = new List<RestaurantReview>
-                        {
-                            new RestaurantReview()
-                            {
-                                Rating=7,
-                                Body = "Lahe!"
-                            }
-                        }
+                        Country = "Belgium"
                     });
 
                 context.SaveChanges();
