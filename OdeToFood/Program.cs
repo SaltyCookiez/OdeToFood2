@@ -2,6 +2,7 @@ using AspNetCore.Unobtrusive.Ajax;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using OdeToFood.Data;
 using OdeToFood.Models;
 
@@ -14,12 +15,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddUnobtrusiveAjax();
 
-builder.Services.AddDefaultIdentity<UserProfile>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<UserProfile, AppRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddDefaultUI()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
+using var serviceScope = app.Services.CreateScope();
+using var userManager = serviceScope.ServiceProvider.GetService<UserManager<UserProfile>>();
+using var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<AppRole>>();
+
+AppDataInit.SeedIdentity(userManager, roleManager);
 SetupAppData(app, app.Environment);
 
 // Configure the HTTP request pipeline.
@@ -79,5 +86,4 @@ void SetupAppData(IApplicationBuilder app, IWebHostEnvironment env)
         }
     }
     AppDataInit.SeedRestaurant(context);
-
 }
