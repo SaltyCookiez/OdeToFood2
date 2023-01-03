@@ -29,6 +29,14 @@ namespace OdeToFood.Data
                         Name = "Marrakesh",
                         City = "D.C",
                         Country = "USA",
+                        Reviews = new List<RestaurantReview>
+                        {
+                            new RestaurantReview()
+                            {
+                                Rating=5,
+                                Body = "Okei!"
+                            }
+                        }
                     });
                 context.Restaurants.Add(
                     new Restaurant
@@ -36,6 +44,14 @@ namespace OdeToFood.Data
                         Name = "The House of Elliot",
                         City = "Ghent",
                         Country = "Belgium",
+                        Reviews = new List<RestaurantReview>
+                        {
+                            new RestaurantReview()
+                            {
+                                Rating=7,
+                                Body = "Lahe!"
+                            }
+                        }
                     });
 
                 context.SaveChanges();
