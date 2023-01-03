@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OdeToFood.Data;
 
@@ -15,6 +16,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+SetupAppData(app, app.Environment);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -46,3 +49,31 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+void SetupAppData(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    using var context = serviceScope
+        .ServiceProvider
+        .GetService<ApplicationDbContext>();
+    if (context == null)
+    {
+        throw new ApplicationException("Problem in services. Can not initialize ApplicationDbContext");
+    }
+    while (true)
+    {
+        try
+        {
+            context.Database.OpenConnection();
+            context.Database.CloseConnection();
+            break;
+        }
+        catch (SqlException e)
+        {
+            if (e.Message.Contains("The login failed.")) { break; }
+            Thread.Sleep(1000);
+        }
+    }
+    AppDataInit.SeedRestaurant(context);
+
+}
