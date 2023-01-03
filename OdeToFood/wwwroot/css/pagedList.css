@@ -111,3 +111,7 @@
      cursor: not-allowed;
      background-color: #ffffff;
 }
+
+.pagination > .disabled > a {
+    pointer-events: none;
+}
