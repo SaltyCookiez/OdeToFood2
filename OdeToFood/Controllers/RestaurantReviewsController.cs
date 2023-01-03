@@ -158,7 +158,7 @@ namespace OdeToFood.Controllers
           return _context.RestaurantReview.Any(e => e.Id == id);
         }
 
-        static List<RestaurantReview> _reviews = new List<RestaurantReview>
+        public static List<RestaurantReview> _reviews = new List<RestaurantReview>
         {
             new RestaurantReview
             {

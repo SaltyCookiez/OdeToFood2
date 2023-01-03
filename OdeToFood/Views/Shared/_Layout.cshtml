@@ -42,6 +42,7 @@
         @RenderSection("Featured" ,required: false)
         <main role="main" class="pb-3">
             @RenderBody()
+            <div>@await Component.InvokeAsync("BestReview")</div>
         </main>
     </div>
 
