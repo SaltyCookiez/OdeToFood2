@@ -1,3 +1,4 @@
+using AspNetCore.Unobtrusive.Ajax;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString).EnableSensitiveDataLogging());
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddUnobtrusiveAjax();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -33,6 +35,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseUnobtrusiveAjax();
 
 app.UseRouting();
 
