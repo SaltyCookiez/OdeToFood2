@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OdeToFood.Controllers;
 
 namespace OdeToFoodTests
@@ -10,7 +11,9 @@ namespace OdeToFoodTests
         public void About()
         {
             //Arrange
-            HomeController controller = new HomeController();
+            using var logFactory = LoggerFactory.Create(builder => builder.AddConsole());
+            var logger = logFactory.CreateLogger<HomeController>();
+            HomeController controller = new HomeController(logger);
 
             //act
             ViewResult result = controller.About() as ViewResult;
