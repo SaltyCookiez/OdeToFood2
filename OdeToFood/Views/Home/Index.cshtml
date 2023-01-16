@@ -9,15 +9,4 @@
     <input type="submit" name="Search By Name" />
 </form>
 
-@*@using (Html.AjaxBeginForm(new AjaxOptions
-{
-    HttpMethod = "get",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "restaurantList"
-}))
-{
-    <input type="search" name="searchTerm" />
-    <input type="submit" name="Search By Name" />
-}*@
-
 <partial name="_Restaurants" model="Model" />

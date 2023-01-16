@@ -19,16 +19,28 @@ $(function () {
 		});
 		return false;
 	};
+
 	const submitAutocompleteForm = function (event, ui) {
+		event.preventDefault()
 		const $input = $(this);
-		$input.val(ui.item.label);
-		const $form = $input.parents("form:first");
-		$form.submit();
+		$input.val(ui.item.value);
 	};
+
 	const createAutocomplete = function () {
 		const $input = $(this);
 		const options = {
-			source: $input.attr("data-otf-autocomplete"),
+			source: function (request, response) {
+				$.ajax({
+					url: $input.attr("data-otf-autocomplete"),
+					dataType: "json",
+					data: {
+						term: request.term
+					},
+					success: function (data) {
+						response(data);
+					}
+				});
+			},
 			select: submitAutocompleteForm
 		};
 		$input.autocomplete(options);

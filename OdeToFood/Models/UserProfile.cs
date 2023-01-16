@@ -9,6 +9,6 @@ namespace OdeToFood.Models
     public class UserProfile : IdentityUser
     {
         [PersonalData]
-        public string FavoriteRestaurant { get; set; }
+        public string? FavoriteRestaurant { get; set; }
     }
 }
